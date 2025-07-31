@@ -14,6 +14,7 @@ converted_folder = os.path.join(local_folder, "converted")
 filtered_folder = os.path.join(local_folder, "filtered")
 unreadable_folder = os.path.join(local_folder, "unreadable")
 
+
 def get_file(filename):
     input_file = fitz.open(os.path.join(local_folder, filename))
     cropped_file = os.path.join(cropped_folder, filename)
@@ -23,10 +24,11 @@ def get_file(filename):
         pix = page.get_pixmap()
         image = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
 
-        ocr_text = pytesseract.image_to_string(image, lang='fra')
+        ocr_text = pytesseract.image_to_string(image, lang="fra")
 
         print(ocr_text)
         break
+
 
 import numpy as np
 
