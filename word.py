@@ -16,15 +16,12 @@ class Word:
         self._cropped_file = os.path.join(
             CROPPED_FOLDER, self._filename + "cropped.pdf"
         )
-        self._converted_file = os.path.join(CONVERTED_FOLDER, self._filename)
 
         self.__crop_to_first_page()
         self.__convert_with_word()
-        os.remove(self._cropped_file)
-        return self._converted_file
 
     def __crop_to_first_page(self):
-        reader = PyPDF2.PdfReader(self._filename)
+        reader = PyPDF2.PdfReader(os.path.join(SCAN_FOLDER, self._filename))
         writer = PyPDF2.PdfWriter()
         writer.add_page(reader.pages[0])
         with open(self._cropped_file, "wb") as f:
@@ -36,8 +33,10 @@ class Word:
         press_and_wait("alt;f;i;u;ctrl+l;ctrl+a")
         keyboard.write(CONVERTED_FOLDER)
         press_and_wait("enter;tab;tab;tab;tab;tab")
-        keyboard.write(self._converted_file)
-        press_and_wait("enter;alt+f4;tab;enter")
+        keyboard.write(self._filename)
+        keyboard.press_and_release("enter")
+        time.sleep(WAIT_FOR_WORD_CLOSING)
+        press_and_wait("alt+f4;tab;enter")
 
 
 def press_and_wait(string, t=0.1):

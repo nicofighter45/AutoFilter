@@ -3,7 +3,7 @@ import subprocess
 
 FILTERS = {
     "SEQUENCES POUR UN OF": [["Produit"], ["SN", "S/N", "Texte 2"], ["Nom"]],
-    "ACCEPTANCE TEST REPORT": [[], ["Equipment revision"], ["Presentation"]]
+    "ACCEPTANCE TEST REPORT": [["Equipment denomination"], ["Equipment revision"], ["Presentation"]]
     }
 
 REMOVE_AT_THE_END = [":", " ", "`", "'", "\\v"]
@@ -18,15 +18,19 @@ class Filter:
 
     def get_name_of_file(self, input_file):
         for document_key in FILTERS.keys():
-            if document_key not in self._text:
-                print("no key detected")
-                #subprocess.run(["start", "acrord32", input_file], shell=True)
-                return ""
+            if len(self._text.split(document_key)) == 0:
+                continue
             for field_keys in FILTERS[document_key]:
                 self._get_from_strings(field_keys, field_keys[0])
                 self._name += "-"
+            break
+        else:
+            print("no key detected", input_file)
+            #subprocess.run(["start", "acrord32", input_file], shell=True)
+            return ""
 
         if len(self._not_detected) != 0:
+            print("not detected", self._not_detected)
             return ""
 
         self._name = self._name[:-1]
@@ -34,6 +38,7 @@ class Filter:
             self._name = self._name.replace(remove, "")
         if "--" in self._name or self._name[0] == "-" or self._name[-1] == "-":
             return ""
+            print("missing detect", self._name)
         return self._name + ".pdf"
 
     def _get_from_strings(self, keys, id):
