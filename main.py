@@ -47,6 +47,16 @@ def get_content_from_text(text, filename, input_file):
     os.replace(input_file, os.path.join(FILTERED_FOLDER, name))
 
 
+def esc_listener():
+    while True:
+        if keyboard.is_pressed('esc'):
+            print("Escape pressed. Exiting program.")
+            os._exit(0)
+
+listener_thread = threading.Thread(target=esc_listener, daemon=True)
+listener_thread.start()
+
+
 """
 for filename in os.listdir(CONVERTED_FOLDER):
     file = os.path.join(CONVERTED_FOLDER, filename)
@@ -60,16 +70,6 @@ file = os.path.join(CONVERTED_FOLDER, "test.pdf")
 text_content = get_file_content(file)
 name = get_content_from_text(text_content, "test.pdf", file)
 """
-
-
-def esc_listener():
-    while True:
-        if keyboard.is_pressed('esc'):
-            print("Escape pressed. Exiting program.")
-            os._exit(0)
-
-listener_thread = threading.Thread(target=esc_listener, daemon=True)
-listener_thread.start()
 
 for filename in os.listdir(SCAN_FOLDER):
     file = os.path.join(SCAN_FOLDER, filename)

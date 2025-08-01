@@ -29,6 +29,9 @@ class Word:
 
     def __convert_with_word(self):
         subprocess.run(["start", "winword", self._cropped_file], shell=True)
+        converted_file = os.path.join(CONVERTED_FOLDER, self._filename)
+        if os.path.exists(converted_file):
+            os.remove(converted_file)
         time.sleep(WAIT_FOR_WORD_OPENING)
         press_and_wait("alt;f;i;u;ctrl+l;ctrl+a")
         keyboard.write(CONVERTED_FOLDER)
