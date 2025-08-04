@@ -42,7 +42,7 @@ def get_content_from_text(text, filename, input_file):
     name = filter.get_name_of_file(input_file)
     if name == "":
         unreadable_file = os.path.join(UNREADABLE_FOLDER, filename)
-        # os.replace(input_file, unreadable_file)
+        os.replace(input_file, unreadable_file)
         return
     os.replace(input_file, os.path.join(FILTERED_FOLDER, name))
 
@@ -57,12 +57,10 @@ listener_thread = threading.Thread(target=esc_listener, daemon=True)
 listener_thread.start()
 
 
-"""
 for filename in os.listdir(CONVERTED_FOLDER):
     file = os.path.join(CONVERTED_FOLDER, filename)
     text_content = get_file_content(file)
     name = get_content_from_text(text_content, filename, file)
-"""
     
     
 """
@@ -70,10 +68,10 @@ file = os.path.join(CONVERTED_FOLDER, "test.pdf")
 text_content = get_file_content(file)
 name = get_content_from_text(text_content, "test.pdf", file)
 """
-
+"""
 for filename in os.listdir(SCAN_FOLDER):
     file = os.path.join(SCAN_FOLDER, filename)
     Word(filename)
     os.replace(file, os.path.join(CONVERTED_FOLDER, filename))
-
+"""
 
