@@ -2,9 +2,13 @@ import time
 import subprocess
 
 FILTERS = {
-    "SEQUENCES POUR UN OF": [["Produit"], ["SN", "S/N", "Texte 2"], ["Nom"]],
-    "ACCEPTANCE TEST REPORT": [["Equipment denomination"], ["Equipment revision"], ["Presentation"]]
-    }
+    "SEQUENCES POUR UN OF": [["Produit"], ["SN", "S/N", "Texte 2"], ["Désignation"]],
+    "ACCEPTANCE TEST REPORT": [
+        ["Equipment denomination"],
+        ["Equipment revision"],
+        ["Presentation"],
+    ],
+}
 
 REMOVE_AT_THE_END = [":", " ", "`", "'", "\\v", "—"]
 
@@ -26,14 +30,14 @@ class Filter:
             break
         else:
             print("no key detected", input_file)
-            #subprocess.run(["start", "acrord32", input_file], shell=True)
-            #input("Press enter to continue")
+            # subprocess.run(["start", "acrord32", input_file], shell=True)
+            # input("Press enter to continue")
             return ""
 
         if len(self._not_detected) != 0:
             print("not detected", self._not_detected)
-            #subprocess.run(["start", "acrord32", input_file], shell=True)
-            #input("Press enter to continue")
+            # subprocess.run(["start", "acrord32", input_file], shell=True)
+            # input("Press enter to continue")
             return ""
 
         self._name = self._name[:-1]
@@ -54,11 +58,13 @@ class Filter:
                     value = self._text.split(key)[i][:30].split("\n")[0]
                     if len(value) <= 4:
                         value = self._text.split(key)[i][:30].split("\n")[1]
-                    if len(value) <= 4 or (k == 1 and not value.replace("à", "").replace(" ", "").isdigit()):
+                    if len(value) <= 4 or (
+                        k == 1 and not value.replace("à", "").replace(" ", "").isdigit()
+                    ):
                         continue
                     self._name += value
                     hasnt_been_called = False
-                    break              
+                    break
                 except (Exception, IndexError) as e:
                     continue
         if hasnt_been_called:
