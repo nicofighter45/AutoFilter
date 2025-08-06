@@ -12,6 +12,7 @@ class InputText:
         self.text_extension = text_extension
         self.blink = 0
         self.font = pg.font.SysFont(None, 32)
+        self.not_found = False
 
     def set_text(self, text):
         self.text = text
@@ -37,6 +38,8 @@ class InputText:
         return self.cursor
 
     def handle_mouse(self, pos):
+        if self.text == "":
+            return
         relative_x = pos[0] - (self.position.x + 10)
         acc_width = 0
         self.cursor = 0
@@ -52,6 +55,8 @@ class InputText:
         pg.draw.rect(screen, self.color, self.position)
         if self.text == "":
             default_text = self.default_text
+            if self.not_found:
+                default_text += " (Non trouvé)"
             italic_font = pg.font.SysFont(None, 32, italic=True)
             txt_surface = italic_font.render(default_text, True, (120, 120, 120))
             self.cursor = 0
