@@ -6,6 +6,9 @@ sys.path.append(os.path.dirname(__file__))
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "application", "src"))
 )
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "application", "lib"))
+)
 
 
 def install(package):

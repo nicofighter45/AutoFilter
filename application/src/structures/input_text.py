@@ -3,7 +3,7 @@ from constants.window import *
 
 
 class InputText:
-    def __init__(self, default_text, position, color, text_extension=""):
+    def __init__(self, default_text, position, color, app, text_extension=""):
         self.text = ""
         self.cursor = 0
         self.default_text = default_text
@@ -13,8 +13,13 @@ class InputText:
         self.blink = 0
         self.font = pg.font.SysFont(None, 32)
         self.not_found = False
+        self.app = app
 
     def set_text(self, text):
+        if self.app.focused_field == self:
+            return
+        if text == "":
+            self.not_found = True
         self.text = text
         self.cursor = len(text)
 
@@ -51,7 +56,7 @@ class InputText:
                 break
             self.cursor = i
 
-    def draw(self, screen, focused=False):
+    def draw(self, screen):
         pg.draw.rect(screen, self.color, self.position)
         if self.text == "":
             default_text = self.default_text
@@ -65,7 +70,7 @@ class InputText:
                 self.text + self.text_extension, True, (0, 0, 0)
             )
 
-        if focused:
+        if self.app.focused_field == self:
             if self.blink % FPS < FPS // 2:
                 cursor_pos = min(self.cursor, len(self.text))
                 cursor_text = self.text[:cursor_pos]

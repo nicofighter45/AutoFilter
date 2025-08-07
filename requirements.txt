@@ -1,3 +1,8 @@
 pygame
 Pillow
 pywin32
+pytesseract
+fitz
+difflib
+numpy
+opencv-python
