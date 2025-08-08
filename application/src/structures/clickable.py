@@ -6,9 +6,9 @@ import pygame as pg
 class Clickable(pg.Rect):
     """Superclass for all clickable objects"""
 
-    def __init__(self, color, position, size):
+    def __init__(self, color, rect):
         self._color = color
-        super().__init__(position[0], position[1], size[0], size[1])
+        super().__init__(rect)
 
     def _is_clicked(self, event):
         """Check if the object is clicked"""
@@ -27,7 +27,7 @@ class Clickable(pg.Rect):
 class Button(Clickable):
     """Class for creating buttons"""
 
-    def __init__(self, text, color, position, size, function=None, should_render=True, text_size=22, black_box=False, selected_color=None, selected=False):
+    def __init__(self, text, color, rect, function=None, should_render=True, text_size=22, black_box=False, selected_color=None, selected=False):
         self.__action = function
         self.__text = text
         self.should_render = should_render
@@ -35,7 +35,7 @@ class Button(Clickable):
         self.__black_box = black_box
         self.selected = selected
         self.__selected_color = selected_color
-        super().__init__(color, position, size)
+        super().__init__(color, rect)
 
     def draw(self, screen):
         """Draw the button on the screen"""

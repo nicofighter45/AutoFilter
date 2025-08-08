@@ -16,7 +16,7 @@ class InputText:
         self.app = app
 
     def set_text(self, text):
-        if self.app.focused_field == self:
+        if self.app.focused_field == self and text == "":
             return
         if text == "":
             self.not_found = True
