@@ -1,4 +1,4 @@
-from abc import  abstractmethod
+from abc import abstractmethod
 
 import pygame as pg
 
@@ -27,7 +27,18 @@ class Clickable(pg.Rect):
 class Button(Clickable):
     """Class for creating buttons"""
 
-    def __init__(self, text, color, rect, function=None, should_render=True, text_size=22, black_box=False, selected_color=None, selected=False):
+    def __init__(
+        self,
+        text,
+        color,
+        rect,
+        function=None,
+        should_render=True,
+        text_size=22,
+        black_box=False,
+        selected_color=None,
+        selected=False,
+    ):
         self.__action = function
         self.__text = text
         self.should_render = should_render
@@ -46,7 +57,13 @@ class Button(Clickable):
         else:
             super().draw(screen)
         text = self.__font.render(self.__text, True, pg.Color("black"))
-        screen.blit(text, (self.x + self.width // 2 - text.get_width() // 2, self.y + self.height // 2 - text.get_height() // 2))
+        screen.blit(
+            text,
+            (
+                self.x + self.width // 2 - text.get_width() // 2,
+                self.y + self.height // 2 - text.get_height() // 2,
+            ),
+        )
         if self.__black_box:
             pg.draw.rect(screen, pg.Color("black"), self, 2)
 

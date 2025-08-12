@@ -7,22 +7,25 @@ from constants.path import SCAN_FOLDER, FILTERED_FOLDER, UNREADABLE_FOLDER
 from processing.filter import Filter
 from constants.window import THREAD_FORWARDING
 
+
 class FileManager:
     def __init__(self, app):
-        self.__index = -THREAD_FORWARDING-1
-        self.__files = [f for f in os.listdir(SCAN_FOLDER) if os.path.isfile(os.path.join(SCAN_FOLDER, f))]
+        self.__index = -THREAD_FORWARDING - 1
+        self.__files = [
+            f
+            for f in os.listdir(SCAN_FOLDER)
+            if os.path.isfile(os.path.join(SCAN_FOLDER, f))
+        ]
         self.__renamed_files = [None for _ in self.__files]
         self.__filters = [None for _ in self.__files]
         self.__pages = [0 for _ in self.__files]
         self.__app = app
-        
+
         for _ in range(THREAD_FORWARDING):
             self.__next_file()
 
-
     def get_main_filter(self):
         return self.__filters[self.__index]
-
 
     def save(self, name):
         if self.__index <= -1 or name == "" or name == "--":
@@ -58,16 +61,16 @@ class FileManager:
         self.__next_file()
 
     def __next_file(self):
-        if self.__index >= len(self.__files)-1:
+        if self.__index >= len(self.__files) - 1:
             return
         self.__index += 1
-        if self.__index+THREAD_FORWARDING >= len(self.__files):
+        if self.__index + THREAD_FORWARDING >= len(self.__files):
             return
-        path = os.path.join(SCAN_FOLDER, self.__files[self.__index+THREAD_FORWARDING])
+        path = os.path.join(SCAN_FOLDER, self.__files[self.__index + THREAD_FORWARDING])
         with open(path, "rb") as f:
-            self.__pages[self.__index+THREAD_FORWARDING] = len(PdfReader(f).pages)
+            self.__pages[self.__index + THREAD_FORWARDING] = len(PdfReader(f).pages)
         self.launch_filter(self.__index + THREAD_FORWARDING)
-        
+
     def launch_filter(self, index=None):
         if index is None:
             index = self.__index
@@ -77,7 +80,9 @@ class FileManager:
         if self.__filters[index] is not None:
             return
         print("LAUNCHING THREAD", index, self.__files[index])
-        text_filter = Filter(os.path.join(SCAN_FOLDER, file), self.get_pages_number(index), self.__app)
+        text_filter = Filter(
+            os.path.join(SCAN_FOLDER, file), self.get_pages_number(index), self.__app
+        )
         threading.Thread(target=text_filter.filter, daemon=True).start()
         self.__filters[index] = text_filter
 
@@ -100,11 +105,14 @@ class FileManager:
 
     def get_files_number(self):
         return len(self.__files)
-    
+
     def return_to_previous(self):
         if self.__index == 0:
             return
-        if self.__renamed_files[self.__index-1]:
-            os.rename(self.__renamed_files[self.__index-1], os.path.join(SCAN_FOLDER, self.__files[self.__index-1]))
+        if self.__renamed_files[self.__index - 1]:
+            os.rename(
+                self.__renamed_files[self.__index - 1],
+                os.path.join(SCAN_FOLDER, self.__files[self.__index - 1]),
+            )
             self.__index -= 1
             self.launch_filter()

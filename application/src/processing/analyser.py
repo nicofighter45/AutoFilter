@@ -1,7 +1,7 @@
-
 import difflib
 
 from constants.text import *
+
 
 def get_best_sequence(text, pattern, cutoff=0.85):
     pattern_length = len(pattern)
@@ -10,7 +10,7 @@ def get_best_sequence(text, pattern, cutoff=0.85):
         substring = text[i : i + pattern_length]
         similarity = difflib.SequenceMatcher(None, substring, pattern).ratio()
         if similarity < 0.3:
-            i = min(i+2, len(text) - pattern_length-1)
+            i = min(i + 2, len(text) - pattern_length - 1)
             continue
         if similarity == 1:
             return i
@@ -21,11 +21,12 @@ def get_best_sequence(text, pattern, cutoff=0.85):
     if len(store) == 1:
         return store[0][1]
     max_similarity, max_index = 0, 0
-    for (similarity, index) in store:
+    for similarity, index in store:
         if similarity > max_similarity:
             max_similarity = similarity
             max_index = index
     return max_index
+
 
 def has_sequence(text, pattern, cutoff=0.85):
     pattern_length = len(pattern)
@@ -33,17 +34,19 @@ def has_sequence(text, pattern, cutoff=0.85):
         substring = text[i : i + pattern_length]
         similarity = difflib.SequenceMatcher(None, substring, pattern).ratio()
         if similarity < 0.3:
-            i = min(i+2, len(text) - pattern_length-1)
+            i = min(i + 2, len(text) - pattern_length - 1)
             continue
         if similarity >= cutoff:
             return True
     return False
+
 
 def has_keys(text, *keys):
     for key in keys:
         if has_sequence(text, key):
             return True
     return False
+
 
 def clean_string(string):
     for remove in REMOVE_AT_THE_END:
@@ -52,6 +55,7 @@ def clean_string(string):
     for old, new in REPLACE_AT_THE_END:
         string = string.replace(old, new)
     return string
+
 
 def get_last_index_for_string(text, *keys):
     for key in keys:

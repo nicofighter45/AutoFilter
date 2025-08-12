@@ -15,7 +15,7 @@ class InputText:
         self.__font = pg.font.SysFont(None, 32)
         self.not_found = False
         self.__is_focused = is_focused
-    
+
     def reset(self):
         self.__text = ""
         self.cursor = 0
@@ -32,7 +32,7 @@ class InputText:
         if self.__text == "":
             self.__text = text
             self.cursor = len(text)
-    
+
     def force_text(self, text):
         self.__text = text
         self.cursor = len(text)
@@ -47,7 +47,7 @@ class InputText:
             self.cursor -= nb
 
     def delete_forward(self, nb=1):
-        if self.cursor-nb <= len(self.__text):
+        if self.cursor - nb <= len(self.__text):
             self.__text = self.__text[: self.cursor] + self.__text[self.cursor + nb :]
 
     def get_text(self):

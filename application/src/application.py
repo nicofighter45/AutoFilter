@@ -46,7 +46,7 @@ class App:
 
     def __handle_event(self):
         for event in pg.event.get():
-            if (event.type == pg.QUIT):
+            if event.type == pg.QUIT:
                 self.__running = False
             elif event.type == pg.KEYDOWN:
                 self.__handle_keyboard(event)
@@ -61,7 +61,7 @@ class App:
             self.__layer.update()
             pg.display.update()
             clock.tick(FPS)
-        
+
         pg.quit()
         exit()
 
