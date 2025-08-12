@@ -39,10 +39,9 @@ def has_sequence(text, pattern, cutoff=0.85):
             return True
     return False
 
-def has_title(text, *keys):
+def has_keys(text, *keys):
     for key in keys:
         if has_sequence(text, key):
-            print("TITLE IS", key)
             return True
     return False
 

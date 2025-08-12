@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from PIL import Image
 
 def remove_lines(image):
     image = np.array(image)
@@ -22,4 +23,4 @@ def remove_lines(image):
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
     for c in cnts:
         cv2.drawContours(result, [c], -1, (255,255,255), 5)
-    return result
+    return Image.fromarray(result)

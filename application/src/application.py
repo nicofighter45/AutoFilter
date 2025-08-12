@@ -6,7 +6,7 @@ import win32gui
 import pygame as pg
 import pytesseract
 
-from filter import Filter
+from processing.filter import Filter
 from layer import Layer
 from file_manager import FileManager
 from constants.path import *
@@ -24,29 +24,25 @@ def maximize_window():
 
 class App:
     def __init__(self):
-               
+
         pg.init()
         pytesseract.pytesseract.tesseract_cmd = TESSERACT_EXE
         os.environ["TESSDATA_PREFIX"] = TESSERACT_LANG_FOLDER
-        
+
+        self.__file_manager = FileManager(self)
         self.__layer = Layer(self)
-        self.__file_manager = FileManager()
         self.__running = True
 
         maximize_window()
-        
+
     def __handle_keyboard(self, event):
         match event.key:
             case pg.K_ESCAPE:
                 if not self.__layer.is_focused():
                     self.__running = False
                 self.__layer.unfocus()
-            case (pg.K_RETURN, pg.K_KP_ENTER):
-                self.launch_filter(self.get_file_manager().save(self.__layer.name_input.get_text()))
-            case (pg.K_LEFT, pg.K_RIGHT):
-                self.__layer.arrow_key(event.key)
             case _:
-                self.__layer.letter_field_event(event.key)
+                self.__layer.letter_field_event(event)
 
     def __handle_event(self):
         for event in pg.event.get():
@@ -55,7 +51,7 @@ class App:
             elif event.type == pg.KEYDOWN:
                 self.__handle_keyboard(event)
             elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                self.__layer.handle_mouse(event.pos)
+                self.__layer.handle_mouse(event)
 
     def run(self):
         clock = pg.time.Clock()
