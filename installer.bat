@@ -36,19 +36,32 @@ IF %ERRORLEVEL% EQU 0 (
     git clone https://github.com/nicofighter45/AutoFilter.git
 )
 
+cd AutoFilter
+
 REM Create the shortcuts to the Destop
 set "DESKTOP=%USERPROFILE%\Desktop"
 set "SHORTCUT=%DESKTOP%\AutoFilter.lnk"
-set "TARGET=%CD%\AutoFilter\application\src\application.py"
+set "TARGET=%CD%\application\src\application.py"
 powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='python';$s.Arguments='\"%TARGET%\"';$s.WorkingDirectory='%CD%\AutoFilter';$s.Save()"
 
 set "SHORTCUT=%DESKTOP%\Tesseract.lnk"
-set "TARGET=%CD%\AutoFilter\application\ressources\tesseract-ocr-w64-setup-5.5.0.20241111.exe"
+set "TARGET=%CD%\application\ressources\tesseract-ocr-w64-setup-5.5.0.20241111.exe"
 powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='%TARGET%\';$s.WorkingDirectory='%CD%\AutoFilter';$s.Save()"
 
 set "SHORTCUT=%DESKTOP%\Auto Filter Configuration.lnk"
-set "TARGET=%CD%\AutoFilter\application\src\constants\"
+set "TARGET=%CD%\application\src\constants\"
 powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='%TARGET%';$s.WorkingDirectory='%CD%\AutoFilter';$s.Save()"
+
+
+REM Check if Tesseract is already installed
+if exist "C:\Program Files\Tesseract-OCR\tesseract.exe" (
+    echo Tesseract is already installed.
+) else (
+    echo Tesseract is not installed. Installing...
+    set INSTALLER="%CD%\application\ressources\tesseract-ocr-w64-setup-5.5.0.20241111.exe"
+    %INSTALLER% /S /v"/qn"
+    setx /M PATH "%PATH%;C:\Program Files\Tesseract-OCR\tesseract.exe"
+)
 
 REM Launching main.py
 cd AutoFilter

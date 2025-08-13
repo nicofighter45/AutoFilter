@@ -2,8 +2,6 @@ import sys
 import os
 import subprocess
 
-from constants.path import TESSERACT_EXE
-
 sys.path.append(os.path.dirname(__file__))
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "application", "src"))
@@ -11,6 +9,8 @@ sys.path.append(
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "application", "lib"))
 )
+
+from constants.path import TESSERACT_EXE
 
 
 def install(package):
