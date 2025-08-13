@@ -1,8 +1,9 @@
-pygame
-Pillow
-pywin32
-pytesseract
-fitz
-difflib
-numpy
-opencv-python
+pygame,pygame
+Pillow,PIL
+pywin32,win32gui
+pytesseract,pytesseract
+PyMuPDF,fitz
+PyPDF2,PyPDF2
+difflib,difflib
+numpy,numpy
+opencv-python,cv2

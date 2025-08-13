@@ -61,9 +61,10 @@ class FileManager:
         self.__next_file()
 
     def __next_file(self):
-        if self.__index >= len(self.__files) - 1:
-            return
         self.__index += 1
+        if self.__index >= len(self.__files) - 1:
+            print("\n\n\nAll files have been processed. Exiting program\n\n")
+            os._exit(0)
         if self.__index + THREAD_FORWARDING >= len(self.__files):
             return
         path = os.path.join(SCAN_FOLDER, self.__files[self.__index + THREAD_FORWARDING])
