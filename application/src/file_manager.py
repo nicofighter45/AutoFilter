@@ -36,8 +36,11 @@ class FileManager:
             self.__filters[self.__index] = None
         filename = self.__files[self.__index]
         original_path = os.path.join(SCAN_FOLDER, filename)
-        filtered_path = os.path.join(FILTERED_FOLDER, name + ".pdf")
+        folder = os.path.join(FILTERED_FOLDER, name.split("-")[0])
+        filtered_path = os.path.join(folder, name + ".pdf")
         try:
+            if not os.path.exists(folder):
+                os.makedirs(folder)
             os.rename(original_path, filtered_path)
             self.__renamed_files[self.__index] = filtered_path
         except FileExistsError:
