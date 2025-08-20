@@ -18,27 +18,27 @@ IF %ERRORLEVEL% EQU 0 (
     echo Python installation complete.
 )
 
-REM Cloning git repository
-echo Cloning Git repository...
-git --version >nul 2>&1
-IF %ERRORLEVEL% EQU 0 (
+
+if NOT exist "main.py" (
+    REM Cloning git repository
+    echo Cloning Git repository...
+    git --version >nul 2>&1
+    IF %ERRORLEVEL% NEQU 0 (
+        echo Git is not installed.
+        echo Downloading Git installer...
+        curl -x %PROXY_URL% -o git-installer.exe https://github.com/git-for-windows/git/releases/download/v2.45.2.windows.1/Git-2.45.2-64-bit.exe
+        echo Running Git installer...
+        start /wait git-installer.exe /VERYSILENT /NORESTART
+        del git-installer.exe
+        echo Git installation complete.
+    )
     git config --global http.proxy %PROXY_URL%
     git clone https://github.com/nicofighter45/AutoFilter.git
-) ELSE (
-    echo Git is not installed.
-    echo Downloading Git installer...
-    curl -x %PROXY_URL% -o git-installer.exe https://github.com/git-for-windows/git/releases/download/v2.45.2.windows.1/Git-2.45.2-64-bit.exe
-    echo Running Git installer...
-    start /wait git-installer.exe /VERYSILENT /NORESTART
-    del git-installer.exe
-    echo Git installation complete.
-    git config --global http.proxy %PROXY_URL%
-    git clone https://github.com/nicofighter45/AutoFilter.git
+    cd AutoFilter
 )
 
-cd AutoFilter
 
-REM Create the shortcuts to the Destop
+REM Create the shortcuts to the Desktop
 set "DESKTOP=%USERPROFILE%\Desktop"
 set "SHORTCUT=%DESKTOP%\AutoFilter.lnk"
 set "TARGET=%CD%\application\src\application.py"
