@@ -3,8 +3,8 @@ import os
 # pas toucher
 LOCAL_FOLDER = os.getcwd()
 
-## vous pouvez toucher à ces fichiers là
-SCAN_FOLDER = R"\\suli-dfs.corp.zodiac.lan\LES_ULIS\DI\_GROUP\scan\AutoFilter"
+## vous pouvez toucher à ces fichiers là, ne pas mettre de lien vers un disque externe il a pas les permissions pour déplacer les fichiers
+SCAN_FOLDER = os.path.join(LOCAL_FOLDER, "files\\original")
 TESSERACT_EXE = R"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 UNREADABLE_FOLDER = os.path.join(LOCAL_FOLDER, "files\\unreadable")
 FILTERED_FOLDER = os.path.join(LOCAL_FOLDER, "files\\filtered")
@@ -19,5 +19,6 @@ print("Local folder is", LOCAL_FOLDER)
 print("Tesseract executable folder is", TESSERACT_EXE)
 print("You can change those paths in the path.py file (using the folder configuration on your desktop)")
 
+os.makedirs(SCAN_FOLDER, exist_ok=True)
 os.makedirs(UNREADABLE_FOLDER, exist_ok=True)
 os.makedirs(FILTERED_FOLDER, exist_ok=True)

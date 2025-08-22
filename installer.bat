@@ -60,6 +60,10 @@ if exist "C:\Program Files\Tesseract-OCR\tesseract.exe" (
     setx /M PATH "%PATH%;C:\Program Files\Tesseract-OCR\tesseract.exe"
 )
 
+echo SVP déplacer vos fichiers scanné dans le fichier "%CD%\application\files\original\"
+echo Puis appuyer sur une touche pour continuer
+pause >nul
+
 REM Launching main.py
 cd AutoFilter
 python main.py
