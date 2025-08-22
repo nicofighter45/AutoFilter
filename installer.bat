@@ -68,6 +68,12 @@ mkdir "%CD%\files\unreadable\"
 echo SVP deplacez vos fichiers scannes dans le fichier "%CD%\files\original\"
 echo Puis appuyez sur une touche pour continuer
 start "" explorer "%CD%\files\original\"
+
+:: Get System PATH
+for /f "tokens=3*" %%A in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path') do set syspath=%%A%%B
+for /f "tokens=3*" %%A in ('reg query "HKCU\Environment" /v Path') do set userpath=%%A%%B
+set PATH=%userpath%;%syspath%
+
 pause >nul
 
 REM Launching main.py
