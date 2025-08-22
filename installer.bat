@@ -4,9 +4,6 @@ REM Check if Python is installed
 python --version >nul 2>&1
 IF %ERRORLEVEL% EQU 0 (
     echo Python is installed.
-    echo Upgrading to the latest version...
-    python -m pip install --upgrade pip --proxy=http://11.56.30.169:3142 --trusted-host pypi.org --trusted-host files.pythonhost
-    python -m pip install --upgrade python --proxy=http://11.56.30.169:3142 --trusted-host pypi.org --trusted-host files.pythonhost
 ) ELSE (
     echo Python is not installed.
     echo Downloading Python installer...
@@ -19,11 +16,11 @@ IF %ERRORLEVEL% EQU 0 (
 )
 
 
-if NOT exist "main.py" (
+IF NOT exist "main.py" (
     REM Cloning git repository
     echo Cloning Git repository...
     git --version >nul 2>&1
-    IF %ERRORLEVEL% NEQU 0 (
+    IF NOT %ERRORLEVEL% EQU 0 (
         echo Git is not installed.
         echo Downloading Git installer...
         curl -x %PROXY_URL% -o git-installer.exe https://github.com/git-for-windows/git/releases/download/v2.45.2.windows.1/Git-2.45.2-64-bit.exe
