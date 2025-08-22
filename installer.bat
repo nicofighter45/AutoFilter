@@ -31,23 +31,24 @@ IF NOT exist "main.py" (
     )
     git config --global http.proxy %PROXY_URL%
     git clone https://github.com/nicofighter45/AutoFilter.git
-    cd AutoFilter
 )
+
+cd AutoFilter
 
 
 REM Create the shortcuts to the Desktop
 set "DESKTOP=%USERPROFILE%\Desktop"
-set "SHORTCUT=%DESKTOP%\AutoFilter.lnk"
+set "SHORTCUT=%DESKTOP%\AutoFilter Application.lnk"
 set "TARGET=%CD%\application\src\application.py"
-powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='python';$s.Arguments='\"%TARGET%\"';$s.WorkingDirectory='%CD%\AutoFilter';$s.Save()"
+powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='python';$s.Arguments='\"%TARGET%\"';$s.WorkingDirectory='%CD%';$s.Save()"
 
-set "SHORTCUT=%DESKTOP%\Tesseract.lnk"
+set "SHORTCUT=%DESKTOP%\Tesseract Executable.lnk"
 set "TARGET=%CD%\application\ressources\tesseract-ocr-w64-setup-5.5.0.20241111.exe"
-powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='%TARGET%\';$s.WorkingDirectory='%CD%\AutoFilter';$s.Save()"
+powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='%TARGET%\';$s.WorkingDirectory='%CD%';$s.Save()"
 
 set "SHORTCUT=%DESKTOP%\Auto Filter Configuration.lnk"
 set "TARGET=%CD%\application\src\constants\"
-powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='%TARGET%';$s.WorkingDirectory='%CD%\AutoFilter';$s.Save()"
+powershell -Command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT%');$s.TargetPath='%TARGET%';$s.WorkingDirectory='%CD%';$s.Save()"
 
 
 REM Check if Tesseract is already installed
@@ -60,8 +61,8 @@ if exist "C:\Program Files\Tesseract-OCR\tesseract.exe" (
     setx /M PATH "%PATH%;C:\Program Files\Tesseract-OCR\tesseract.exe"
 )
 
-echo SVP déplacer vos fichiers scanné dans le fichier "%CD%\application\files\original\"
-echo Puis appuyer sur une touche pour continuer
+echo SVP deplacez vos fichiers scannes dans le fichier "%CD%\application\files\original\"
+echo Puis appuyez sur une touche pour continuer
 pause >nul
 
 REM Launching main.py

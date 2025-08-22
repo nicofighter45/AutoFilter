@@ -65,8 +65,7 @@ class FileManager:
 
     def __next_file(self):
         self.__index += 1
-        if self.__index >= len(self.__files) - 1:
-            print("\n\n\nAll files have been processed. Exiting program\n\n")
+        if self.__index > len(self.__files) - 1:
             os._exit(0)
         if self.__index + THREAD_FORWARDING >= len(self.__files):
             return
