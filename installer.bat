@@ -8,9 +8,9 @@ IF %ERRORLEVEL% EQU 0 (
     echo Python is not installed.
     echo Downloading Python installer...
     
-    curl -x %PROXY_URL% -o python-installer.exe https://www.python.org/ftp/python/3.12.3/python-3.12.3-amd64.exe 
+    curl -x %PROXY_URL% -o python-installer.exe https://www.python.org/ftp/python/3.13.7/python-3.13.7-amd64.exe
     echo Running Python installer...
-    start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
+    start /wait python-installer.exe InstallAllUsers=0 PrependPath=1
     del python-installer.exe
     echo Python installation complete.
 )

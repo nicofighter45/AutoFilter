@@ -1,7 +1,7 @@
 import os
 
 # pas toucher
-LOCAL_FOLDER = os.path.dirname(os.path.abspath(__file__))
+LOCAL_FOLDER = os.getcwd()
 
 ## vous pouvez toucher à ces fichiers là
 SCAN_FOLDER = R"\\suli-dfs.corp.zodiac.lan\LES_ULIS\DI\_GROUP\scan\AutoFilter"
