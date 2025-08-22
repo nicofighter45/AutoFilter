@@ -16,6 +16,11 @@ class FileManager:
             for f in os.listdir(SCAN_FOLDER)
             if os.path.isfile(os.path.join(SCAN_FOLDER, f))
         ]
+        
+        if len(self.__files) < 1:
+            print("No file found, exiting.")
+            os._exit(0)
+
         self.__renamed_files = [None for _ in self.__files]
         self.__filters = [None for _ in self.__files]
         self.__pages = [0 for _ in self.__files]
