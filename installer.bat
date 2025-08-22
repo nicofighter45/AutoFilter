@@ -65,9 +65,9 @@ mkdir "%CD%\files\original\"
 mkdir "%CD%\files\filtered\"
 mkdir "%CD%\files\unreadable\"
 
-echo SVP deplacez vos fichiers scannes dans le fichier "%CD%\application\files\original\"
+echo SVP deplacez vos fichiers scannes dans le fichier "%CD%\files\original\"
 echo Puis appuyez sur une touche pour continuer
-start "" explorer "%CD%\application\files\original\"
+start "" explorer "%CD%\files\original\"
 pause >nul
 
 REM Launching main.py
